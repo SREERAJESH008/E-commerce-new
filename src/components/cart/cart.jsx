@@ -49,11 +49,11 @@ const cart = ({ cartItems }) => {
           <h1>Shopping Cart</h1>
         </header>
 
-        <div class="cart-container">
+        <div className="cart-container">
           {cartItems.map((item, index) => (
             <div className="cart-item" key={index}>
               {/* Display item details */}
-              <div className="cart-item-details">
+              <div className="cart-item-details"> 
                 <h2>{item.name}</h2>
                 <p>{item.price}</p>
                 <p>{item.quantity}</p>
@@ -83,13 +83,15 @@ const cart = ({ cartItems }) => {
                 <FaArrowDown />
               </div> */}
             </div>
+            // console.log(item)
           ))}
+          
 
-          <div class="cart-total">
+          <div className="cart-total">
             <p>Total: ${calculateTotalPrice()}</p>
           </div>
 
-          <a href="#" class="checkout-btn">
+          <a href="#" className="checkout-btn">
             Proceed to Checkout
           </a>
         </div>

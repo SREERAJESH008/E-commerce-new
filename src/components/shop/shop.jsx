@@ -1,5 +1,6 @@
 import "./shop.css";
-import Products from "../../constants/shop.js";
+import Products from "../../components/index-ids/index";
+import ShopProduct from "../index-ids";
 
 const Shop = ({ addToCart }) => {
   const Item = (props) => {
@@ -17,7 +18,7 @@ const Shop = ({ addToCart }) => {
         {/* <img className="img-1" src={props.imgUrl} alt={props.name} /> */}
         <img className="img-1" src={props.image} alt={props.name} />
         <p className="content-5">{props.name}</p>
-        <p className="content-5">{props.type}</p>
+        <p className="content-5">{props.weight}</p>
         <p className="content-5">$ {props.price}</p>
         <div className="bottom-5">
           <button className="btn-1" onClick={handleAddToCart}>
@@ -28,9 +29,11 @@ const Shop = ({ addToCart }) => {
       </div>
     );
   };
+  // console.log(Products)
   return (
     <div className="shop ">
-      {Products.map((item, id) => {
+      {ShopProduct.map((item, id) => {
+        console.log(item);
         return (
           <Item
             key={id}
@@ -38,12 +41,13 @@ const Shop = ({ addToCart }) => {
             name={item.name}
             price={item.price}
             image={item.imgUrl}
-            type={item.type}
+            weight={item.weight}
           />
         );
       })}
     </div>
   );
 };
+
 
 export default Shop;
