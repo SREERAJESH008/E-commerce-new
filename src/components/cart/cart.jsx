@@ -1,4 +1,6 @@
 import "./cart.css";
+import { FaArrowUp } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 
 const cart = ({ cartItems }) => {
   const calculateItemTotal = (item) => {
@@ -11,6 +13,35 @@ const cart = ({ cartItems }) => {
       0
     );
   };
+
+   const onRemoveItem = (id) => {
+    const remaining = cart.filter((product) => product.id !== id);
+    console.log(remaining);
+    setCart(remaining);
+  };
+
+  const addQuantity = (id) => {
+    const cartProducts = cart.map((product) => {
+      if (product.id === id) {
+        console.log(product.quantity + 1);
+        return { ...product, quantity: product.quantity + 1 };
+      } else {
+        return product;
+      }
+    });
+    setCart(cartProducts);
+  };
+   const minusQuantity = (id) => {
+     const cartProducts = cart.map((product) => {
+       if (product.id === id && product.quantity !== 1) {
+         return { ...product, quantity: product.quantity - 1 };
+       } else {
+         return product;
+       }
+     });
+     setCart(cartProducts);
+   };
+  
   return (
     <div className="mad">
       <div cart-main>
@@ -28,7 +59,29 @@ const cart = ({ cartItems }) => {
                 <p>{item.quantity}</p>
                 <p>${calculateItemTotal(item)}</p>
               </div>
-              <button>Remove</button>
+              <button
+                onClick={() => {
+                  addQuantity(item.id);
+                }}
+                className="plus"
+              >
+                +
+              </button>
+              {item.quantity}
+              <button
+                onClick={() => {
+                  minusQuantity(item.id);
+                }}
+                className="minus"
+              >
+                -
+              </button>
+              <button onClick={() => onRemoveItem(item.id)} className="btn">
+                Remove
+              </button>
+              {/* <div className="arrow-2">
+                <FaArrowDown />
+              </div> */}
             </div>
           ))}
 
