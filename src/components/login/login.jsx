@@ -1,29 +1,46 @@
 import "./login.css";
-import {useNavigate, Link}from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../components/firebase/index.js";
+import React, {useState} from "react";
 
 //functions
 
 const Login = () => {
   const navigate = useNavigate();
-  const signInWithGoogle = async (event) => {
-    event.preventDefault();
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
-    navigate("/slide");
+  // const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = () => {
+    if ( !password || !confirmPassword) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password do not match.");
+      return;
+    }
+
+    // Additional validation or sign-up logic can be added here
+
+    alert("SIGN UP SUCCESS !");
   };
 
-    const handleSignUp = () => {
-      // Add your sign-up logic here
-      alert("SIGN UP SECCESS !");
-      
-    };
-
-    
-
+  const signInWithGoogle = async (event) => {
+    event.preventDefault();
+    try {
+      const { user } = await signInWithGooglePopup();
+      const userDocRef = await createUserDocumentFromAuth(user);
+      navigate("/slide");
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
+      alert("Google sign-in failed. Please try again.");
+    }
+  };
 
   return (
     <main>
@@ -31,15 +48,34 @@ const Login = () => {
         <h1 className="heading">Sign Up</h1>
         <div className="name">
           <h5 className="type">User Name</h5>
-          <input type="text" placeholder="Enter Your Name Here" />
+          <input
+            className="bar-01"
+            type="text"
+            placeholder="Enter Your Name Here"
+            // Assuming you have a username state as well
+            // value={username}
+            // onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div className="name">
           <h5 className="type">Password</h5>
-          <input type="password" placeholder="Enter Your Password Here" />
+          <input
+            className="bar-01"
+            type="password"
+            placeholder="Enter Your Password Here"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div className="name">
           <h5 className="type"> Confirm Password</h5>
-          <input type="password" placeholder="Confirm Password" />
+          <input
+            className="bar-01"
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </div>
         <div className="bhai">
           <button onClick={handleSignUp} className="button-0">
@@ -54,83 +90,5 @@ const Login = () => {
   );
 };
 
+
 export default Login;
-
-// ... (your existing imports)
-
-// // ... (your existing code)
-
-
-// // firebase/index.js
-
-// import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-// import { getFirestore, doc, setDoc } from 'firebase/firestore';
-// import { initializeApp } from 'firebase/app';
-
-// const firebaseConfig = {
-//   // Your Firebase configuration
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-// const db = getFirestore(app);
-
-// const signInWithGooglePopup = async () => {
-//   const provider = new GoogleAuthProvider();
-//   const result = await signInWithPopup(auth, provider);
-//   return result;
-// };
-
-// const createUserDocumentFromAuth = async (user) => {
-//   const userDocRef = doc(db, 'users', user.uid);
-//   // Your logic to create a user document in Firestore
-//   return userDocRef;
-// };
-
-// export { signInWithGooglePopup, createUserDocumentFromAuth, auth, db };
-
-
-
-// const Login = () => {
-//   const navigate = useNavigate();
-
-//   const handleSignUp = () => {
-//     // Add your sign-up logic here
-//     alert("Sign up logic goes here!");
-//   };
-
-//   const signInWithGoogle = async (event) => {
-//     event.preventDefault();
-//     const { user } = await signInWithGooglePopup();
-//     const userDocRef = await createUserDocumentFromAuth(user);
-//     navigate("/slide");
-//   };
-
-
-//   return (
-//     <main>
-//       <div className="login-master">
-//         <h1 className="heading">Sign Up</h1>
-//         <div className="name">
-//           <h5 className="type">User Name</h5>
-//           <input type="text" placeholder="Enter Your Name Here" />
-//         </div>
-//         <div className="name">
-//           <h5 className="type">Password</h5>
-//           <input type="password" placeholder="Enter Your Password Here" />
-//         </div>
-//         <div className="bhai">
-//           <button onClick={handleSignUp} className="button-0">
-//             Sign Up
-//           </button>
-//           <button onClick={signInWithGoogle} className="button-4">
-//             Sign Up With Google
-//           </button>
-//         </div>
-//       </div>
-//     </main>
-//   );
-// };
-
-// export default Login;
-
