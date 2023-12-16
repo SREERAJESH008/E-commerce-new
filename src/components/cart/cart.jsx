@@ -1,8 +1,9 @@
 import "./cart.css";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
+import { useState } from "react";
 
-const cart = ({ cartItems }) => {
+const cart = ({ cartItems, setCartItems }) => {
   const calculateItemTotal = (item) => {
     return item.price * item.quantity;
   };
@@ -14,36 +15,33 @@ const cart = ({ cartItems }) => {
     );
   };
 
-   const onRemoveItem = (id) => {
-    const remaining = cart.filter((product) => product.id !== id);
-    console.log(remaining);
-    setCart(remaining);
+  const onRemoveItem = (id) => {
+    const remaining = cartItems.filter((product) => product.id !== id);
+    setCartItems(remaining);
   };
 
-  const addQuantity = (id) => {
-    const cartProducts = cart.map((product) => {
-      if (product.id === id) {
-        console.log(product.quantity + 1);
-        return { ...product, quantity: product.quantity + 1 };
-      } else {
-        return product;
-      }
-    });
-    setCart(cartProducts);
+  const onAddQuantity = (id) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
   };
-   const minusQuantity = (id) => {
-     const cartProducts = cart.map((product) => {
-       if (product.id === id && product.quantity !== 1) {
-         return { ...product, quantity: product.quantity - 1 };
-       } else {
-         return product;
-       }
-     });
-     setCart(cartProducts);
-   };
-  
+
+  const onMinusQuantity = (id) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
   return (
+    
     <div className="mad">
+      
       <div cart-main>
         <header>
           <h1>Shopping Cart</h1>
@@ -53,26 +51,21 @@ const cart = ({ cartItems }) => {
           {cartItems.map((item, index) => (
             <div className="cart-item" key={index}>
               {/* Display item details */}
-              <div className="cart-item-details"> 
+              <div className="cart-item-details">
+                <img src={item.image} alt={item.name} />
                 <h2>{item.name}</h2>
                 <p>{item.price}</p>
                 <p>{item.quantity}</p>
                 <p>${calculateItemTotal(item)}</p>
+
               </div>
-              <button
-                onClick={() => {
-                  addQuantity(item.id);
-                }}
-                className="plus"
-              >
+              <button className="plus" onClick={() => onAddQuantity(item.id)}>
                 +
               </button>
               {item.quantity}
               <button
-                onClick={() => {
-                  minusQuantity(item.id);
-                }}
                 className="minus"
+                onClick={() => onMinusQuantity(item.id)}
               >
                 -
               </button>
@@ -85,7 +78,6 @@ const cart = ({ cartItems }) => {
             </div>
             // console.log(item)
           ))}
-          
 
           <div className="cart-total">
             <p>Total: ${calculateTotalPrice()}</p>

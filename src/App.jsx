@@ -51,7 +51,7 @@ function App() {
         },
         {
           path: "cart",
-          element: <Cart cartItems={cartItems} />,
+          element: <Cart cartItems={cartItems} setCartItems={setCartItems}  />,
         },
       ],
     },

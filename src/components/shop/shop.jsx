@@ -14,7 +14,9 @@ const Shop = ({ addToCart }) => {
       });
     };
     return (
+    
       <div className="box">
+        {/* <div className="search-box"><input type="search" /></div> */}
         {/* <img className="img-1" src={props.imgUrl} alt={props.name} /> */}
         <img className="img-1" src={props.image} alt={props.name} />
         <p className="content-5">{props.name}</p>
@@ -26,6 +28,7 @@ const Shop = ({ addToCart }) => {
             + ADD TO CART
           </button>
         </div>
+        
       </div>
     );
   };

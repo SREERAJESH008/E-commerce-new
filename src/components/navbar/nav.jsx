@@ -11,6 +11,7 @@ const Navbar = () => {
           alt="img"
         />
       </div>
+      
       <div className="nav-line">
         <div className="bar-25">
           {" "}
