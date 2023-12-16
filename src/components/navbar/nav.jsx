@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="bar-25">
           {" "}
           <Link className="bar-25" to={`/`}>
-            Home
+            HOME
           </Link>
         </div>
         <div className="bar-25">ABOUT</div>

@@ -16,6 +16,7 @@
     justify-content: space-evenly;
     margin-left: 13rem;
     margin-top: 2rem;
+
 }
 .heading{
     font-size: 3rem;
@@ -55,4 +56,11 @@
     background-color: blue;
     border-radius: 2rem;
     cursor: pointer;
+}
+
+.bar-01{
+    width: 14rem;
+    height: 2rem;
+    font-size: 1rem;
+    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.2));
 }
